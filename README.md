@@ -67,8 +67,28 @@ def activate(request,uidb64,token):
         return render(request,'activation_invalid.html')
 
 ________________________________________________________________________
+token.py
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
-______________________________________________________________________
+class TokenGenerator(PasswordResetTokenGenerator):
+    def _make_hash_value(self,user,timestamp):
+        return (
+        str(user.pk) + str(timestamp) 
+        # text_type(user.profile.signup_confirmation)
+        )
+
+generate_token = TokenGenerator()
+____________________________________________
+Emailcomfirmation.html
+<!-- templates/auth/account_activation_email.html -->
+<p>Hi {{ user.username }},</p>
+<p>Please click the link below to activate your account:</p>
+<a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}">Activate your account</a>
+
+<!-- templates/auth/account_activation_invalid.html -->
+<h2>Activation link is invalid!</h2>
+<p>The activation link is invalid. Please try registering again.</p>
+
 
 ______________________________________________________________________
 
