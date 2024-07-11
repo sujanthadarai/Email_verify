@@ -3,6 +3,7 @@ Doc for email verify in django
 
 STEP1:
 
+
 set up email with django 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
